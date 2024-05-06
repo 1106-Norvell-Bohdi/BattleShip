@@ -7,6 +7,19 @@
 #include "ship.h"
 
 class Board{
-    
+   Cell board[][];
+   int maxSize;
+
+   public:
+   Board();
+   Board(cell, int);
+   Board(const board&);
+
+   cell getBoardArray();
+   int getMaxSize();
+   
+   void setBoardArray(cell[][]);
+   void setMaxSize(int);
+   void setBoard(); 
 };
 #endif
