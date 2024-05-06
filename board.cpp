@@ -1,10 +1,18 @@
+//Authors: Bohdi Norvell & Keegan Evans
+//Project: PA4 - Battleship
+//Due Date May 15th, 2024
+
 #include "board.h"
 
 Board::Board(){
-    board[][] = 
+    
 }
-Board(cell, int);
-Board(const board&);
+Board::Board(cell, int){
+
+}
+Board::Board(const Board& rhs){
+
+}
 
 cell Board::getBoardArray(){
     return board;

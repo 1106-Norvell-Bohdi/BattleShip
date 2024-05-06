@@ -11,27 +11,27 @@ class Ship{
     string name;
     int length;
     bool isSunk;
-    cell firstSpace, lastSpace;
+    Cell firstSpace, lastSpace;
 
     public:
 
     Ship();
-    Ship(char, string, int, bool, cell);
+    Ship(char, string, int, bool, Cell);
     Ship(const Ship&);
 
     char getShape();
     string getName();
     int getLength();
     bool getIsSunk();
-    cell getFirstSpace();
-    cell getLastSpace();
+    Cell getFirstSpace();
+    Cell getLastSpace();
 
     void setShape(char);
     void setName(string);
     void setLength(int);
     void setIsSunk(bool);
-    void setFirstSpace(cell);
-    void setLastSpace(cell);
+    void setFirstSpace(Cell);
+    void setLastSpace(Cell);
 
     void checkIfHit();
 };

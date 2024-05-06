@@ -1,3 +1,7 @@
+//Authors: Bohdi Norvell & Keegan Evans
+//Project: PA4 - Battleship
+//Due Date May 15th, 2024
+
 #include "user.h"
 
 User::User(){
@@ -5,8 +9,8 @@ User::User(){
     columnGuess = 0;
     rowGuess = 'O'
     isTurn = false;
-    //attackBoard;
-    //defendBoard;
+    attackBoard;
+    defendBoard;
 }
 User::User(int n, int c, char r, bool t, board a, board d){
     numBoats = n; 

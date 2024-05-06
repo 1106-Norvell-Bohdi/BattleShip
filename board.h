@@ -5,20 +5,20 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include "ship.h"
+#define MAXSIZE 10
 
 class Board{
-   Cell board[][];
-   int maxSize;
+   Cell board[][MAXSIZE];
 
    public:
    Board();
-   Board(cell, int);
-   Board(const board&);
+   Board(Cell, int);
+   Board(const Board&);
 
-   cell getBoardArray();
+   Cell getBoardArray();
    int getMaxSize();
    
-   void setBoardArray(cell[][]);
+   void setBoardArray(Cell[][MAXSIZE]);
    void setMaxSize(int);
    void setBoard(); 
 };
