@@ -6,13 +6,13 @@
 
 Cell::Cell(){
     shape = '*';
-    column = 'C';
-    row = 0;
+    row = 'Z';
+    column = 0;
     hit = false;
     occupied = false;
 }
 
-Cell::Cell(string s, string c, int r, bool h, bool o){
+Cell::Cell(string s, string r, int c, bool h, bool o){
     shape = s;
     column = c;
     row = r;
@@ -30,10 +30,10 @@ Cell::Cell(const Cell& rhs){
 string Cell::getShape(){
     return shape;
 }
-string Cell::getColumn(){
+int Cell::getColumn(){
     return column;
 }
-int Cell::getRow(){
+string Cell::getRow(){
     return row;
 }
 bool Cell::getHit(){
@@ -46,10 +46,10 @@ bool Cell::getOccupied(){
 void Cell::setShape(string s){
     shape = s;
 }
-void Cell::setColumn(string c){
+void Cell::setColumn(int c){
     column = c;
 }
-void Cell::setRow(int r){
+void Cell::setRow(string r){
     row = r;
 }
 void Cell::setHit(bool h){

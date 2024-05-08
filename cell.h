@@ -12,8 +12,8 @@ using namespace std;
 
 class Cell{
     
-    string shape, column;
-    int row;
+    string shape, row;
+    int column;
     bool hit;
     bool occupied;
 
@@ -23,14 +23,14 @@ class Cell{
     Cell(const Cell&);
 
     string getShape();
-    string getColumn();
-    int getRow();
+    int getColumn();
+    string getRow();
     bool getHit();
     bool getOccupied();
 
     void setShape(string);
-    void setColumn(string);
-    void setRow(int);
+    void setColumn(int);
+    void setRow(string);
     void setHit(bool);
     void setOccupied(bool);
 };

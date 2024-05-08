@@ -15,7 +15,6 @@ class Board{
    Board(Cell**);
    Board(const Board&);
 
-   Board getBoard();
    Cell** getBoardArray();
    void setBoardArray(Cell**);
    void setBoard(); 
