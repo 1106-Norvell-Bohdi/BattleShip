@@ -7,9 +7,11 @@
 #include "user.h"
 
 string nextLetter(string);
+int letterToNumber(string);
 Board setAllCells(Board);
-void displayBoard(Board);
+void displayBoards(Board, Board);
 int randomTurn();
+Board placeShips(Board, Ship);
 
 
 #endif
