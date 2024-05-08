@@ -5,6 +5,9 @@
 #ifndef CELL_H
 #define CELL_H
 #include <iostream>
+#include <stdlib.h>
+#include <ctime>
+
 using namespace std; 
 
 class Cell{

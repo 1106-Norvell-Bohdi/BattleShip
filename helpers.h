@@ -9,5 +9,7 @@
 string nextLetter(string);
 Board setAllCells(Board);
 void displayBoard(Board);
+int randomTurn();
+
 
 #endif

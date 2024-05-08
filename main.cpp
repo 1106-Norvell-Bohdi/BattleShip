@@ -19,6 +19,16 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    player_atk = setAllCells(player_atk);
-    displayBoard(player_atk);
+    
+    system("clear");
+    player_atk = setAllCells(player_atk); // These are just to show that it is working
+    displayBoard(player_atk);// This is as well
+
+    if(randomTurn() == 0){
+        player.setTurn(true);
+    }
+    else{
+        AI.setTurn(true);
+    }
+
 }

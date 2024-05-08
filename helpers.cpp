@@ -51,6 +51,7 @@ Board setAllCells(Board b){
 }
 
 void displayBoard(Board b){
+
     string letter = "A";
     cout<<"  1 2 3 4 5 6 7 8 9 10"<<endl;
     for(int i = 0; i < MAXSIZE; i++){
@@ -61,4 +62,9 @@ void displayBoard(Board b){
         }
         cout<<endl;
     }
+}
+
+int randomTurn(){
+    srand(time(NULL));
+    return rand() % 2;  
 }
