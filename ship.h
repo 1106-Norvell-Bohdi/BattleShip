@@ -7,31 +7,31 @@
 #include "cell.h"
 
 class Ship{
-    char shape;
-    string name;
+    string name, shape;
     int length;
     bool isSunk;
-    Cell firstSpace, lastSpace;
+    Cell* firstSpace; 
+    Cell* lastSpace;
 
     public:
 
     Ship();
-    Ship(char, string, int, bool, Cell);
+    Ship(string, string, int, bool, Cell*, Cell*);
     Ship(const Ship&);
 
-    char getShape();
+    string getShape();
     string getName();
     int getLength();
     bool getIsSunk();
-    Cell getFirstSpace();
-    Cell getLastSpace();
+    Cell* getFirstSpace();
+    Cell* getLastSpace();
 
-    void setShape(char);
+    void setShape(string);
     void setName(string);
     void setLength(int);
     void setIsSunk(bool);
-    void setFirstSpace(Cell);
-    void setLastSpace(Cell);
+    void setFirstSpace(Cell*);
+    void setLastSpace(Cell*);
 
     void checkIfHit();
 };

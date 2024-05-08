@@ -12,7 +12,7 @@ Cell::Cell(){
     occupied = false;
 }
 
-Cell::Cell(char s, char c, int r, bool h, bool o){
+Cell::Cell(string s, string c, int r, bool h, bool o){
     shape = s;
     column = c;
     row = r;
@@ -22,15 +22,15 @@ Cell::Cell(char s, char c, int r, bool h, bool o){
 Cell::Cell(const Cell& rhs){
     shape = rhs.shape;
     column = rhs.column;
-    row = rhss.row;
+    row = rhs.row;
     hit = rhs.hit;
     occupied = rhs.occupied;
 }
 
-char Cell::getShape(){
+string Cell::getShape(){
     return shape;
 }
-char Cell::getColumn(){
+string Cell::getColumn(){
     return column;
 }
 int Cell::getRow(){
@@ -43,17 +43,17 @@ bool Cell::getOccupied(){
     return occupied;
 }
 
-void Cell::setShape(char s){
+void Cell::setShape(string s){
     shape = s;
 }
-void Cell::setColumn(char c){
+void Cell::setColumn(string c){
     column = c;
 }
 void Cell::setRow(int r){
     row = r;
 }
 void Cell::setHit(bool h){
-    hit = h
+    hit = h;
 }
 void Cell::setOccupied(bool o){
     occupied = o;

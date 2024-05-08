@@ -8,18 +8,15 @@
 #define MAXSIZE 10
 
 class Board{
-   Cell board[][MAXSIZE];
+   Cell** board;
 
    public:
    Board();
-   Board(Cell, int);
+   Board(Cell**);
    Board(const Board&);
 
-   Cell getBoardArray();
-   int getMaxSize();
-   
-   void setBoardArray(Cell[][MAXSIZE]);
-   void setMaxSize(int);
+   Cell** getBoardArray();
+   void setBoardArray(Cell**);
    void setBoard(); 
 };
 #endif

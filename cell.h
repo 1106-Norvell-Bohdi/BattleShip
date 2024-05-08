@@ -8,25 +8,25 @@
 using namespace std; 
 
 class Cell{
-    protected:
-    char shape, column;
+    
+    string shape, column;
     int row;
     bool hit;
     bool occupied;
 
     public:
     Cell();
-    Cell(char, string, int, bool, bool);
+    Cell(string, string, int, bool, bool);
     Cell(const Cell&);
 
-    char getShape();
-    char getColumn();
+    string getShape();
+    string getColumn();
     int getRow();
     bool getHit();
     bool getOccupied();
 
-    void setShape(char);
-    void setColumn(char);
+    void setShape(string);
+    void setColumn(string);
     void setRow(int);
     void setHit(bool);
     void setOccupied(bool);

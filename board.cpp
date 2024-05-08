@@ -5,26 +5,40 @@
 #include "board.h"
 
 Board::Board(){
-    
+    board = new Cell *[MAXSIZE];
+    for(int i = 0; i < MAXSIZE; i++){
+        board[i] = new Cell [MAXSIZE];
+    }
 }
-Board::Board(cell, int){
+Board::Board(Cell** b){
+    board = new Cell *[MAXSIZE];
+    for(int i = 0; i < MAXSIZE; i++){
+        board[i] = new Cell [MAXSIZE];
+    }
+    for(int i = 0; i < MAXSIZE; i++){
+        for(int j = 0; j < MAXSIZE; j++){
+            board[i][j] = b[i][j];
+        }
+    }
 
 }
 Board::Board(const Board& rhs){
-
+    board = new Cell *[MAXSIZE];
+    for(int i = 0; i < MAXSIZE; i++){
+        board[i] = new Cell [MAXSIZE];
+    }
+    for(int i = 0; i < MAXSIZE; i++){
+        for(int j = 0; j < MAXSIZE; j++){
+            board[i][j] = rhs.board[i][j];
+        }
+    }
 }
 
-cell Board::getBoardArray(){
+Cell** Board::getBoardArray(){
     return board;
 }
-int Board::getMaxSize(){
-    return maxSize;
-}
-void Board::setBoardArray(cell array){
+void Board::setBoardArray(Cell** array){
     board = array;
-}
-void Board::setMaxSize(int m){
-    maxSize = m;
 }
    
 void Board::setBoard(){
