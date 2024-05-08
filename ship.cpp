@@ -17,10 +17,10 @@ Ship::Ship(){
     name = "Ship";
     length = 3; // Total Ship Sizes: 2, 3. 3,4,5
     isSunk = false;
-    firstSpace = new Cell;
-    lastSpace = new Cell;
+    //firstSpace = new Cell;
+    //lastSpace = new Cell;
 }
-Ship::Ship(string s, string n, int l, bool is, Cell* fs, Cell* ls){
+Ship::Ship(string n, string s, int l, bool is, Cell fs, Cell ls){
     shape = s;
     name = n;
     length = l;
@@ -50,10 +50,10 @@ int Ship::getLength(){
 bool Ship::getIsSunk(){
     return isSunk;
 }
-Cell* Ship::getFirstSpace(){
+Cell Ship::getFirstSpace(){
     return firstSpace;
 }
-Cell* Ship::getLastSpace(){
+Cell Ship::getLastSpace(){
     return lastSpace;
 }
 
@@ -69,10 +69,10 @@ void Ship::setLength(int l){
 void Ship::setIsSunk(bool is){
     isSunk = is;
 }
-void Ship::setFirstSpace(Cell* fs){
+void Ship::setFirstSpace(Cell fs){
     firstSpace = fs;
 }
-void Ship::setLastSpace(Cell* ls){
+void Ship::setLastSpace(Cell ls){
     lastSpace = ls;
 }
 
