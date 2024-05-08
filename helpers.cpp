@@ -126,14 +126,19 @@ Board placeShips(Board b, Ship s){
     cout<<"Would you like to place this ship vertically or horizontally (H/V)? ";
     cin>>choice;
     
-    /*if(choice == "H" || choice == "H"){
+    if(choice == "H" || choice == "h"){
         s.setLastSpace(b.getBoardArray()[letterToNum(row)][col + s.getLength() - 1]);
         for(int i = 0; i < s.getLength(); i++){
             b.getBoardArray()[letterToNum(row)][col].setShape("b");
             cout<<b.getBoardArray()[letterToNum(row)][col].getShape();
             col++;
         }
-    }*/
+            cout<<endl<<s.getFirstSpace().getColumn();
+            cout<<s.getFirstSpace().getRow()<<endl;            
+            
+            cout<<s.getLastSpace().getColumn();
+            cout<<s.getLastSpace().getRow();
+    }
     
     return b;
 }
