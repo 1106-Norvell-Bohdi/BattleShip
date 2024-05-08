@@ -6,4 +6,8 @@
 #define HELPERS_H
 #include "user.h"
 
+string nextLetter(string);
+Board setAllCells(Board);
+void displayBoard(Board);
+
 #endif

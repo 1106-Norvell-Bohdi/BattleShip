@@ -19,4 +19,6 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
+    player_atk = setAllCells(player_atk);
+    displayBoard(player_atk);
 }

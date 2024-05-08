@@ -7,7 +7,7 @@
 Board::Board(){
     board = new Cell *[MAXSIZE];
     for(int i = 0; i < MAXSIZE; i++){
-        board[i] = new Cell [MAXSIZE];
+        board[i] = new Cell [MAXSIZE]; 
     }
 }
 Board::Board(Cell** b){

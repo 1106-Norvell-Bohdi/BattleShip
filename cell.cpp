@@ -5,7 +5,7 @@
 #include "cell.h"
 
 Cell::Cell(){
-    shape = '_';
+    shape = '*';
     column = 'C';
     row = 0;
     hit = false;
