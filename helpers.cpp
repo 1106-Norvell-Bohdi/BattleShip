@@ -63,7 +63,13 @@ int letterToNum(string letter){
     if(letter == "I" || letter == "i"){
         return 8;
     }
-    return 9;
+    if(letter == "J" || letter == "j"){
+        return 9;
+    }
+    if(letter == "V" || letter == "v"){
+        return 10;
+    }
+    return 99;
 }
 
 Board setAllCells(Board b){
@@ -101,7 +107,7 @@ void displayBoards(Board attack, Board defend){
         cout<<letter<<" ";
         letter = nextLetter(letter);
         for (int j = 0; j <MAXSIZE; j++){
-            cout<<attack.getBoardArray()[j][i].getShape()<<" ";
+            cout<<defend.getBoardArray()[j][i].getShape()<<" ";
         }
         cout<<endl;
     }
@@ -115,30 +121,42 @@ int randomTurn(){
 
 Board placeShips(Board b, Ship s){
     string row, choice;
-    int col;
+    int col, rowN;
+
+        cout << "The "<<s.getName()<<" is "<<s.getLength()<<" spaces long..." << endl;
+        cout<<"Would you like to place this ship vertically or horizontally (H/V)? ";
+        cin>>choice;
+        cout<<"The "<<s.getName()<<" is "<<s.getLength()<<" spaces long. Please enter row and column number: "<<endl;
+        cout<<"Row: ";
+        cin>>row;
+        rowN = letterToNum(row);
+        cout<<"The "<<s.getName()<<" is "<<s.getLength()<<" spaces long. Please enter row and column number: "<<endl;
+        cout<<"Column: ";
+        cin>>col;
     
-    cout<<"The "<<s.getName()<<" is "<<s.getLength()<<" spaces long. Please enter row and column number: "<<endl;
-    cout<<"Row: ";
-    cin>>row;
-    cout<<"Column: ";
-    cin>>col;
-    //s.setFirstSpace(b.getBoardArray()[letterToNum(row)][col]);
-    cout<<"Would you like to place this ship vertically or horizontally (H/V)? ";
-    cin>>choice;
-    
-    if(choice == "H" || choice == "h"){
-        s.setLastSpace(b.getBoardArray()[letterToNum(row)][col + s.getLength() - 1]);
+    if(letterToNum(choice) == 7){
+        s.setFirstSpace(b.getBoardArray()[col-1][rowN]);
+        s.setLastSpace(b.getBoardArray()[col+s.getLength() -1][rowN]);
         for(int i = 0; i < s.getLength(); i++){
-            b.getBoardArray()[letterToNum(row)][col].setShape("b");
-            cout<<b.getBoardArray()[letterToNum(row)][col].getShape();
+            b.getBoardArray()[col-1][rowN].setShape(s.getShape());
             col++;
+            
         }
+    }
+    if(letterToNum(choice) == 10){
+        s.setFirstSpace(b.getBoardArray()[col-1][rowN]);
+        s.setLastSpace(b.getBoardArray()[col-1][rowN+s.getLength()-1]);
+        for(int i = 0; i < s.getLength(); i++){
+            b.getBoardArray()[col-1][rowN].setShape(s.getShape());
+            rowN++;
+        }
+    }
             cout<<endl<<s.getFirstSpace().getColumn();
             cout<<s.getFirstSpace().getRow()<<endl;            
             
             cout<<s.getLastSpace().getColumn();
             cout<<s.getLastSpace().getRow();
-    }
+    // }
     
     return b;
 }

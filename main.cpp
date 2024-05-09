@@ -18,11 +18,11 @@ int main(){
     AI_atk = setAllCells(AI_atk); 
     AI_def = setAllCells(AI_def);
     
-    Ship carrier("Carrier", "B", 5, false, firstSpace, lastSpace);
+    Ship carrier("Carrier", "C", 5, false, firstSpace, lastSpace);
     Ship battleship("Battleship", "B", 4, false, firstSpace, lastSpace);
-    Ship destoyer("Destroyer", "B", 3, false, firstSpace, lastSpace);
-    Ship submarine("Submarine", "B", 3, false, firstSpace, lastSpace);
-    Ship patrol_boat("Patrol Boat", "B", 2, false, firstSpace, lastSpace);
+    Ship destroyer("Destroyer", "D", 3, false, firstSpace, lastSpace);
+    Ship submarine("Submarine", "S", 3, false, firstSpace, lastSpace);
+    Ship patrol_boat("Patrol Boat", "P", 2, false, firstSpace, lastSpace);
     
     system("clear");
     
@@ -36,8 +36,17 @@ int main(){
     }
     
     system("clear");
+    player_def = placeShips(player_def, patrol_boat);
+    displayBoards(player_atk, player_def);
     player_def = placeShips(player_def, submarine);
     displayBoards(player_atk, player_def);
+    player_def = placeShips(player_def, destroyer);
+    displayBoards(player_atk, player_def);
+    player_def = placeShips(player_def, battleship);
+    displayBoards(player_atk, player_def);
+    player_def = placeShips(player_def, carrier);
+    displayBoards(player_atk, player_def);
+
     
     if(randomTurn() == 0){
         player.setTurn(true);

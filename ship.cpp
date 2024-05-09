@@ -17,8 +17,8 @@ Ship::Ship(){
     name = "Ship";
     length = 3; // Total Ship Sizes: 2, 3. 3,4,5
     isSunk = false;
-    //firstSpace = new Cell;
-    //lastSpace = new Cell;
+    Cell firstSpace;
+    Cell lastSpace;
 }
 Ship::Ship(string n, string s, int l, bool is, Cell fs, Cell ls){
     shape = s;
