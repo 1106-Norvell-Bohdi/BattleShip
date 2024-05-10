@@ -12,6 +12,7 @@ Board setAllCells(Board);
 void displayBoards(Board, Board);
 int randomTurn();
 Board placeShips(Board, Ship);
+Board placeShipsAi(Board, Ship);
 
 
 #endif

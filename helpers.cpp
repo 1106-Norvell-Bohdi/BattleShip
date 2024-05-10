@@ -160,3 +160,35 @@ Board placeShips(Board b, Ship s){
     
     return b;
 }
+
+Board placeShipsAi(Board b, Ship ship){
+    srand(time(NULL));
+    bool isHorizontal = rand() % 2 == 0;
+    if(isHorizontal){
+        int maxStartCol = MAXSIZE - ship.getLength();
+        int row = rand() % MAXSIZE;
+        int col = rand() % (maxStartCol+1);
+        ship.setFirstSpace(b.getBoardArray()[col-1][row]);
+        ship.setLastSpace(b.getBoardArray()[col+ship.getLength() -1][row]);
+        for(int i = 0; i < ship.getLength(); i++){
+            b.getBoardArray()[col-1][row].setShape(ship.getShape());
+            col++;
+        }
+    }
+    else{
+        int maxStartRow = MAXSIZE - ship.getLength();
+        int row = rand() % (maxStartRow+1);
+        int col = rand() % MAXSIZE;
+        ship.setFirstSpace(b.getBoardArray()[col-1][row]);
+        ship.setLastSpace(b.getBoardArray()[col-1][row+ship.getLength()-1]);
+        for(int i = 0; i < ship.getLength(); i++){
+            b.getBoardArray()[col-1][row].setShape(ship.getShape());
+            row++;
+        }
+    }
+    return b;
+    //get random selection for H/V
+    //get random selection for Starting Row
+    //get random selection for Starting Col
+    //Check cells to make sure it can be placed with no overlap
+}
