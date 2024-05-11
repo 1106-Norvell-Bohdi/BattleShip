@@ -72,13 +72,13 @@ int letterToNum(string letter){
     return 99;
 }
 
-Board setAllCells(Board b){
+Board* setAllCells(Board* b){
     string row = "A";
     int column = 1;
     for(int i = 0; i < MAXSIZE; i++){
         for (int j = 0; j <MAXSIZE; j++){
-            b.getBoardArray()[j][i].setColumn(column);
-            b.getBoardArray()[j][i].setRow(row);
+            b->getBoardArray()[j][i].setColumn(column);
+            b->getBoardArray()[j][i].setRow(row);
             column++;
         }
         row = 1;
@@ -87,7 +87,7 @@ Board setAllCells(Board b){
     return b;
 }
 
-void displayBoards(Board attack, Board defend){
+void displayBoards(Board* attack, Board* defend){
 
     string letter = "A";
     cout<<"++++ ATTACK BOARD ++++"<<endl;
@@ -96,7 +96,7 @@ void displayBoards(Board attack, Board defend){
         cout<<letter<<" ";
         letter = nextLetter(letter);
         for (int j = 0; j <MAXSIZE; j++){
-            cout<<attack.getBoardArray()[j][i].getShape()<<" ";
+            cout<<attack->getBoardArray()[j][i].getShape()<<" ";
         }
         cout<<endl;
     }
@@ -107,7 +107,7 @@ void displayBoards(Board attack, Board defend){
         cout<<letter<<" ";
         letter = nextLetter(letter);
         for (int j = 0; j <MAXSIZE; j++){
-            cout<<defend.getBoardArray()[j][i].getShape()<<" ";
+            cout<<defend->getBoardArray()[j][i].getShape()<<" ";
         }
         cout<<endl;
     }
@@ -119,70 +119,64 @@ int randomTurn(){
     return rand() % 2;  
 }
 
-Board placeShips(Board b, Ship s){
+Board* placeShips(Board* b, Ship* s){
     string row, choice;
     int col, rowN;
 
-        cout << "The "<<s.getName()<<" is "<<s.getLength()<<" spaces long..." << endl;
+        cout << "The "<<s->getName()<<" is "<<s->getLength()<<" spaces long..." << endl;
         cout<<"Would you like to place this ship vertically or horizontally (H/V)? ";
         cin>>choice;
-        cout<<"The "<<s.getName()<<" is "<<s.getLength()<<" spaces long. Please enter row and column number: "<<endl;
-        cout<<"Row: ";
+        cout<<"Please enter row and column: "<<endl;
+        cout<<"Row (Letter): ";
         cin>>row;
         rowN = letterToNum(row);
-        cout<<"The "<<s.getName()<<" is "<<s.getLength()<<" spaces long. Please enter row and column number: "<<endl;
-        cout<<"Column: ";
+        cout<<"Column (Number): ";
         cin>>col;
     
     if(letterToNum(choice) == 7){
-        s.setFirstSpace(b.getBoardArray()[col-1][rowN]);
-        s.setLastSpace(b.getBoardArray()[col+s.getLength() -1][rowN]);
-        for(int i = 0; i < s.getLength(); i++){
-            b.getBoardArray()[col-1][rowN].setShape(s.getShape());
+        s->setFirstSpace(&b->getBoardArray()[col-1][rowN]);
+        s->setLastSpace(&b->getBoardArray()[col+s->getLength()-1][rowN-1]);
+        for(int i = 0; i < s->getLength(); i++){
+            b->getBoardArray()[col-1][rowN].setShape(s->getShape());
+            b->getBoardArray()[col-1][rowN].setOccupied(true);
             col++;
-            
         }
     }
     if(letterToNum(choice) == 10){
-        s.setFirstSpace(b.getBoardArray()[col-1][rowN]);
-        s.setLastSpace(b.getBoardArray()[col-1][rowN+s.getLength()-1]);
-        for(int i = 0; i < s.getLength(); i++){
-            b.getBoardArray()[col-1][rowN].setShape(s.getShape());
+        s->setFirstSpace(&b->getBoardArray()[col-1][rowN]);
+        s->setLastSpace(&b->getBoardArray()[col-1][rowN+s->getLength()-1]);
+        for(int i = 0; i < s->getLength(); i++){
+            b->getBoardArray()[col-1][rowN].setShape(s->getShape());
+            b->getBoardArray()[col-1][rowN].setOccupied(true);
             rowN++;
         }
     }
-            cout<<endl<<s.getFirstSpace().getColumn();
-            cout<<s.getFirstSpace().getRow()<<endl;            
-            
-            cout<<s.getLastSpace().getColumn();
-            cout<<s.getLastSpace().getRow();
-    // }
     
     return b;
 }
 
-Board placeShipsAi(Board b, Ship ship){
+Board* placeShipsAi(Board* b, Ship* ship){
     srand(time(NULL));
     bool isHorizontal = rand() % 2 == 0;
     if(isHorizontal){
-        int maxStartCol = MAXSIZE - ship.getLength();
+        int maxStartCol = MAXSIZE - ship->getLength();
         int row = rand() % MAXSIZE;
         int col = rand() % (maxStartCol+1);
-        ship.setFirstSpace(b.getBoardArray()[col-1][row]);
-        ship.setLastSpace(b.getBoardArray()[col+ship.getLength() -1][row]);
-        for(int i = 0; i < ship.getLength(); i++){
-            b.getBoardArray()[col-1][row].setShape(ship.getShape());
+        ship->setFirstSpace(&b->getBoardArray()[col-1][row]);
+        ship->setLastSpace(&b->getBoardArray()[col+ship->getLength() -1][row]);
+        for(int i = 0; i < ship->getLength(); i++){
+            b->getBoardArray()[col-1][row].setShape(ship->getShape());
             col++;
         }
     }
     else{
-        int maxStartRow = MAXSIZE - ship.getLength();
+        int maxStartRow = MAXSIZE - ship->getLength();
         int row = rand() % (maxStartRow+1);
         int col = rand() % MAXSIZE;
-        ship.setFirstSpace(b.getBoardArray()[col-1][row]);
-        ship.setLastSpace(b.getBoardArray()[col-1][row+ship.getLength()-1]);
-        for(int i = 0; i < ship.getLength(); i++){
-            b.getBoardArray()[col-1][row].setShape(ship.getShape());
+        ship->setFirstSpace(&b->getBoardArray()[col-1][row]);
+        ship->setLastSpace(&b->getBoardArray()[col-1][row+ship->getLength()-1]);
+        for(int i = 0; i < ship->getLength(); i++){
+            b->getBoardArray()[col-1][row].setShape(ship->getShape());
             row++;
         }
     }
@@ -191,4 +185,36 @@ Board placeShipsAi(Board b, Ship ship){
     //get random selection for Starting Row
     //get random selection for Starting Col
     //Check cells to make sure it can be placed with no overlap
+}
+
+Board* placeAllShips(Board* A, Board* D, Ship* c, Ship* b, Ship* d, Ship* s, Ship* p){
+    system("clear");
+    displayBoards(A, D);
+    D = placeShips(D, c);
+    system("clear");
+    displayBoards(A, D);
+    D = placeShips(D, b);
+    system("clear");
+    displayBoards(A, D);
+    D = placeShips(D, d);
+    system("clear");
+    displayBoards(A, D);
+    D = placeShips(D, s);
+    system("clear");
+    displayBoards(A, D);
+    D = placeShips(D, p);
+    system("clear");
+    displayBoards(A, D);
+    return D;
+}
+
+Board checkForHit(Board a, Board d, int r, int c){
+    if(d.getBoardArray()[r][c].getOccupied() == true){
+        a.getBoardArray()[r][c].setShape("!");
+        a.getBoardArray()[r][c].setHit(true);
+        d.getBoardArray()[r][c].setShape("!");
+        d.getBoardArray()[r][c].setHit(true);
+        
+    }
+    return d;
 }

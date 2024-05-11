@@ -8,11 +8,12 @@
 
 string nextLetter(string);
 int letterToNumber(string);
-Board setAllCells(Board);
-void displayBoards(Board, Board);
+Board* setAllCells(Board*);
+void displayBoards(Board*, Board*);
 int randomTurn();
-Board placeShips(Board, Ship);
-Board placeShipsAi(Board, Ship);
-
+Board* placeShips(Board, Ship);
+Board* placeShipsAi(Board, Ship);
+Board* placeAllShips(Board*, Board*, Ship*, Ship*, Ship*, Ship*, Ship*);
+Board* checkForHit(Board, Board);
 
 #endif

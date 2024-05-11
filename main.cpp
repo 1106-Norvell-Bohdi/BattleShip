@@ -7,28 +7,31 @@
 int main(){
     string choice;
         
-    User player; 
-    User AI;
-    Cell firstSpace;
-    Cell lastSpace;
-    
-    Board player_atk, player_def, AI_atk, AI_def;
+    User* player = new User; 
+    User* AI = new User;
+    Cell* firstSpace = new Cell;
+    Cell* lastSpace = new Cell;
+
+    Board* player_atk = new Board;
+    Board* player_def = new Board; 
+    Board* AI_atk = new Board; 
+    Board* AI_def = new Board;
     player_atk = setAllCells(player_atk); 
     player_def = setAllCells(player_def); 
     AI_atk = setAllCells(AI_atk); 
     AI_def = setAllCells(AI_def);
     
-    Ship carrier("Carrier", "C", 5, false, firstSpace, lastSpace);
-    Ship battleship("Battleship", "B", 4, false, firstSpace, lastSpace);
-    Ship destroyer("Destroyer", "D", 3, false, firstSpace, lastSpace);
-    Ship submarine("Submarine", "S", 3, false, firstSpace, lastSpace);
-    Ship patrol_boat("Patrol Boat", "P", 2, false, firstSpace, lastSpace);
+    Ship* carrier = new Ship("Carrier", "C", 5, false, firstSpace, lastSpace);
+    Ship* battleship = new Ship("Battleship", "B", 4, false, firstSpace, lastSpace);
+    Ship* destroyer = new Ship("Destroyer", "D", 3, false, firstSpace, lastSpace);
+    Ship* submarine = new Ship("Submarine", "S", 3, false, firstSpace, lastSpace);
+    Ship* patrol_boat = new Ship("Patrol Boat", "P", 2, false, firstSpace, lastSpace);
 
-    Ship carrierAi("Carrier", "C", 5, false, firstSpace, lastSpace);
-    Ship battleshipAi("Battleship", "B", 4, false, firstSpace, lastSpace);
-    Ship destroyerAi("Destroyer", "D", 3, false, firstSpace, lastSpace);
-    Ship submarineAi("Submarine", "S", 3, false, firstSpace, lastSpace);
-    Ship patrol_boatAi("Patrol Boat", "P", 2, false, firstSpace, lastSpace);
+    Ship* carrierAi = new Ship("Carrier", "C", 5, false, firstSpace, lastSpace);
+    Ship* battleshipAi = new Ship("Battleship", "B", 4, false, firstSpace, lastSpace);
+    Ship* destroyerAi = new Ship("Destroyer", "D", 3, false, firstSpace, lastSpace);
+    Ship* submarineAi = new Ship("Submarine", "S", 3, false, firstSpace, lastSpace);
+    Ship* patrol_boatAi = new Ship("Patrol Boat", "P", 2, false, firstSpace, lastSpace);
     
     system("clear");
     
@@ -40,33 +43,22 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    
-    system("clear");
-    // player_def = placeShips(player_def, patrol_boat);
-    // displayBoards(player_atk, player_def);
-    // player_def = placeShips(player_def, submarine);
-    // displayBoards(player_atk, player_def);
-    // player_def = placeShips(player_def, destroyer);
-    // displayBoards(player_atk, player_def);
-    // player_def = placeShips(player_def, battleship);
-    // displayBoards(player_atk, player_def);
-    // player_def = placeShips(player_def, carrier);
-    // displayBoards(player_atk, player_def);
+    player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
 
-    system("clear");
+    /*system("clear");
     AI_def = placeShipsAi(AI_def, carrierAi);
     displayBoards(AI_atk, AI_def);
     AI_def = placeShipsAi(AI_def, submarine);
-    displayBoards(AI_atk, AI_def);
+    displayBoards(AI_atk, AI_def);*/
 
 
 
     
     if(randomTurn() == 0){
-        player.setTurn(true);
+        player->setTurn(true);
     }
     else{
-        AI.setTurn(true);
+        AI->setTurn(true);
     }
 
 }
