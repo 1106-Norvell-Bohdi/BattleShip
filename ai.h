@@ -13,8 +13,8 @@ class Ai: protected User{
     public:
 
     Ai();
-    Ai(int, int);
-    Ai(const Player&);
+    Ai(int, int, int, int, char, bool, Board, Board);
+    Ai(const Ai&);
 
     int getNumWins();
     int getNumHits();

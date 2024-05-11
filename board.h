@@ -17,6 +17,7 @@ class Board{
 
    Cell** getBoardArray();
    void setBoardArray(Cell**);
-   void setBoard(); 
+
+ friend ostream& operator <<(ostream&, Board*);
 };
 #endif

@@ -33,7 +33,7 @@ void Player::setNumHits(int h){
     numHits = h;
 }
 
-void Player::makeMove(Board atk){
+void Player::makeMove(Board* atk){
     string attackRow;
     int attackCol;
     cout << "Enter the Row (A-J) of the attack coordinate: ";

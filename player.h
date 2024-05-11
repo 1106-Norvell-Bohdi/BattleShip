@@ -13,7 +13,7 @@ class Player: protected User{
     public:
 
     Player();
-    Player(int, int);
+    Player(int, int, int, int, char, bool, Board, Board);
     Player(const Player&);
 
     int getNumWins();
@@ -21,6 +21,6 @@ class Player: protected User{
     void setNumWins(int);
     void setNumHits(int);
 
-    void makeMove();
+    void makeMove(Board*);
 };
 #endif

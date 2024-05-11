@@ -87,30 +87,29 @@ Board* setAllCells(Board* b){
     return b;
 }
 
+ostream& operator<<(ostream& out, Board* b){
+        string letter = "A";
+        for(int i = 0; i < MAXSIZE; i++){
+        out<<letter<<" ";
+        letter = nextLetter(letter);
+        for (int j = 0; j <MAXSIZE; j++){
+            cout<<b->getBoardArray()[j][i].getShape()<<" ";
+        }
+        cout<<endl;
+    }
+    return out;
+}
+
 void displayBoards(Board* attack, Board* defend){
 
     string letter = "A";
     cout<<"++++ ATTACK BOARD ++++"<<endl;
     cout<<"  1 2 3 4 5 6 7 8 9 10"<<endl;
-    for(int i = 0; i < MAXSIZE; i++){
-        cout<<letter<<" ";
-        letter = nextLetter(letter);
-        for (int j = 0; j <MAXSIZE; j++){
-            cout<<attack->getBoardArray()[j][i].getShape()<<" ";
-        }
-        cout<<endl;
-    }
+    cout<<attack;
+
     cout<<endl<<"---- Defend Board ----"<<endl;
     cout<<"  1 2 3 4 5 6 7 8 9 10"<<endl;
-    letter = "A";
-        for(int i = 0; i < MAXSIZE; i++){
-        cout<<letter<<" ";
-        letter = nextLetter(letter);
-        for (int j = 0; j <MAXSIZE; j++){
-            cout<<defend->getBoardArray()[j][i].getShape()<<" ";
-        }
-        cout<<endl;
-    }
+    cout<<defend;
 
 }
 
@@ -208,13 +207,32 @@ Board* placeAllShips(Board* A, Board* D, Ship* c, Ship* b, Ship* d, Ship* s, Shi
     return D;
 }
 
-Board checkForHit(Board a, Board d, int r, int c){
-    if(d.getBoardArray()[r][c].getOccupied() == true){
-        a.getBoardArray()[r][c].setShape("!");
-        a.getBoardArray()[r][c].setHit(true);
-        d.getBoardArray()[r][c].setShape("!");
-        d.getBoardArray()[r][c].setHit(true);
+void checkForHit(Board* a, Board* d, int r, int c){
+    if(d->getBoardArray()[r][c].getOccupied() == true){
+        a->getBoardArray()[r][c].setShape("!");
+        a->getBoardArray()[r][c].setHit(true);
         
+        d->getBoardArray()[r][c].setShape("!");
+        d->getBoardArray()[r][c].setHit(true);
+        
+        cout<<"Hit! At position "<<r<<c<<endl; 
     }
-    return d;
+    else{
+        a->getBoardArray()[r][c].setShape("M");
+        a->getBoardArray()[r][c].setHit(false);
+        
+        d->getBoardArray()[r][c].setShape("M");
+        d->getBoardArray()[r][c].setHit(false);
+        
+        cout<<"Miss. At position "<<r<<c<<endl;
+    }
 }
+
+/*template <class T>
+void takeTurn(T p){
+
+    //I was thinking here we could use the template for both the AI and the Player.
+    //We just have to make sure that any text that is displayed is applicable to both player and AI
+    //call check for Hit and display boards
+
+}*/

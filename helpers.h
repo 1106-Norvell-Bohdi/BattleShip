@@ -14,6 +14,9 @@ int randomTurn();
 Board* placeShips(Board, Ship);
 Board* placeShipsAi(Board, Ship);
 Board* placeAllShips(Board*, Board*, Ship*, Ship*, Ship*, Ship*, Ship*);
-Board* checkForHit(Board, Board);
+void checkForHit(Board*, Board*);
+
+template <class T>
+void takeTurn(T*);
 
 #endif

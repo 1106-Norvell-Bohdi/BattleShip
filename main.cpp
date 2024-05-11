@@ -45,6 +45,8 @@ int main(){
     }
     player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
 
+    //takeTurn(player); This is the template function
+    
     /*system("clear");
     AI_def = placeShipsAi(AI_def, carrierAi);
     displayBoards(AI_atk, AI_def);

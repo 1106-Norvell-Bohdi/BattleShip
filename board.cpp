@@ -40,7 +40,3 @@ Cell** Board::getBoardArray(){
 void Board::setBoardArray(Cell** array){
     board = array;
 }
-   
-void Board::setBoard(){
-
-}
