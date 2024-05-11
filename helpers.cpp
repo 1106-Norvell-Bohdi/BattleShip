@@ -228,11 +228,24 @@ void checkForHit(Board* a, Board* d, int r, int c){
     }
 }
 
+bool checkIfGuessed(Board* b, int r, int c){
+    if(b->getBoardArray()[r][c].getShape() == "!" || b->getBoardArray()[r][c].getShape() == "M")
+        return true;
+    
+    else false;
+}
+
+void checkForWin(int n){
+    if(n == 17){
+        cout<<"Congratulations! You sunk all of your opponents Battleships!"<<endl;
+    }
+}
+
 /*template <class T>
 void takeTurn(T p){
 
     //I was thinking here we could use the template for both the AI and the Player.
     //We just have to make sure that any text that is displayed is applicable to both player and AI
-    //call check for Hit and display boards
+    //call check for Hit and display boards and check if guessed
 
 }*/

@@ -15,6 +15,8 @@ Board* placeShips(Board, Ship);
 Board* placeShipsAi(Board, Ship);
 Board* placeAllShips(Board*, Board*, Ship*, Ship*, Ship*, Ship*, Ship*);
 void checkForHit(Board*, Board*);
+bool checkIfGuessed(Board*, int, int);
+void checkForWin(int);
 
 template <class T>
 void takeTurn(T*);
