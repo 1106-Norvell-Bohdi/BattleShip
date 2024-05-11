@@ -229,10 +229,11 @@ void checkForHit(Board* a, Board* d, int r, int c){
 }
 
 bool checkIfGuessed(Board* b, int r, int c){
-    if(b->getBoardArray()[r][c].getShape() == "!" || b->getBoardArray()[r][c].getShape() == "M")
+    if(b->getBoardArray()[r][c].getShape() == "!" || b->getBoardArray()[r][c].getShape() == "M"){
+        cout<<"Sorry that position has already been guessed!"<<endl;
         return true;
-    
-    else false;
+    }
+    else return false;
 }
 
 void checkForWin(int n){
