@@ -11,8 +11,8 @@ int letterToNumber(string);
 Board* setAllCells(Board*);
 void displayBoards(Board*, Board*);
 int randomTurn();
-Board* placeShips(Board, Ship);
-Board* placeShipsAi(Board, Ship);
+Board* placeShips(Board*, Ship*);
+Board* placeShipsAi(Board* b, Ship* ship1, Ship* ship2, Ship* ship3, Ship* ship4, Ship* ship5);
 Board* placeAllShips(Board*, Board*, Ship*, Ship*, Ship*, Ship*, Ship*);
 void checkForHit(Board*, Board*);
 bool checkIfGuessed(Board*, int, int);
@@ -20,5 +20,6 @@ void checkForWin(int);
 
 template <class T>
 void takeTurn(T*);
+bool canPlaceShip(Board* b, Ship* s, int r, int c, bool o);
 
 #endif

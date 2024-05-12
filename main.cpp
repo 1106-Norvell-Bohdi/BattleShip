@@ -43,7 +43,9 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    // player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    AI_def = placeShipsAi(AI_def, carrierAi, battleshipAi, destroyerAi, submarineAi, patrol_boatAi);
+    displayBoards(AI_atk, AI_def);
 
     //takeTurn(player); This is the template function
     
