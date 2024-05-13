@@ -6,9 +6,7 @@
 
 int main(){
     string choice;
-        
-    User* player = new User; 
-    User* AI = new User;
+
     Cell* firstSpace = new Cell;
     Cell* lastSpace = new Cell;
 
@@ -21,6 +19,9 @@ int main(){
     AI_atk = setAllCells(AI_atk); 
     AI_def = setAllCells(AI_def);
     
+    Player* player = new Player; 
+    Player* AI = new Player;
+
     Ship* carrier = new Ship("Carrier", "C", 5, false, firstSpace, lastSpace);
     Ship* battleship = new Ship("Battleship", "B", 4, false, firstSpace, lastSpace);
     Ship* destroyer = new Ship("Destroyer", "D", 3, false, firstSpace, lastSpace);
@@ -45,26 +46,30 @@ int main(){
     }
     player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
     displayBoards(player_atk, player_def);
+    cout<<endl;
+    
     AI_def = placeShipsAi(AI_def, carrierAi, battleshipAi, destroyerAi, submarineAi, patrol_boatAi);
     displayBoards(AI_atk, AI_def);
 
-    //takeTurn(player); This is the template function
-    
-    /*system("clear");
-    AI_def = placeShipsAi(AI_def, carrierAi);
-    displayBoards(AI_atk, AI_def);
-    AI_def = placeShipsAi(AI_def, submarine);
-    displayBoards(AI_atk, AI_def);*/
+    if(randomTurn() == 0){
+        player->setTurn(true);
+    }
+    else AI->setTurn(true);
 
-
-
-
-    
-    // if(randomTurn() == 0){
-    //     player->setTurn(true);
-    // }
-    // else{
-    //     AI->setTurn(true);
-    // }
+    do{
+        if(player->getIsTurn() == true){
+            makeMove(player_atk, AI_def);
+            player->setTurn(false);
+            AI->setTurn(true);
+            system("clear");
+            displayBoards(player_atk, player_def);
+        }
+        else{
+            player->setTurn(true);
+            AI->setTurn(false);
+            system("clear");
+            displayBoards(player_atk, player_def);
+        }
+    }while(checkForWin(AI->getNumHits()) == false || checkForWin(AI->getNumHits() == false));
 
 }

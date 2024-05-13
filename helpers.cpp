@@ -228,25 +228,26 @@ Board* placeAllShips(Board* A, Board* D, Ship* c, Ship* b, Ship* d, Ship* s, Shi
     return D;
 }
 
-bool checkForHit(Board* a, Board* d, int r, int c){
-    if(d->getBoardArray()[r][c].getOccupied() == true){
-        a->getBoardArray()[r][c].setShape("!");
-        a->getBoardArray()[r][c].setHit(true);
+bool checkForHit(Board* a, Board* d, string r, int c){
+    int row = letterToNum(r);
+    if(d->getBoardArray()[row][c].getOccupied() == true){
+        a->getBoardArray()[row][c].setShape("!");
+        a->getBoardArray()[row][c].setHit(true);
         
-        d->getBoardArray()[r][c].setShape("!");
-        d->getBoardArray()[r][c].setHit(true);
+        d->getBoardArray()[row][c].setShape("!");
+        d->getBoardArray()[row][c].setHit(true);
         
-        cout<<"Hit! At position "<<r<<c<<endl;
+        cout<<"Hit! At position "<<r<<c+1<<endl;
         return true;
     }
     else{
-        a->getBoardArray()[r][c].setShape("M");
-        a->getBoardArray()[r][c].setHit(false);
+        a->getBoardArray()[row][c].setShape("M");
+        a->getBoardArray()[row][c].setHit(false);
         
-        d->getBoardArray()[r][c].setShape("M");
-        d->getBoardArray()[r][c].setHit(false);
+        d->getBoardArray()[row][c].setShape("M");
+        d->getBoardArray()[row][c].setHit(false);
         
-        cout<<"Miss. At position "<<r<<c<<endl;
+        cout<<"Miss. At position "<<r<<c+1<<endl;
         return false;
     }
 }
@@ -256,23 +257,18 @@ bool checkIfGuessed(Board* b, int r, int c){
         cout<<"Sorry that position has already been guessed!"<<endl;
         return true;
     }
-    else return false;
+    return false;
 }
 
-void checkForWin(int n){
+bool checkForWin(int n){
     if(n == 17){
         cout<<"Congratulations! You sunk all of your opponents Battleships!"<<endl;
+        return true;
     }
+    return false;
 }
-
-/*template <class T>
-void takeTurn(T p){
-
-    //I was thinking here we could use the template for both the AI and the Player.
-    //We just have to make sure that any text that is displayed is applicable to both player and AI
-    //call check for Hit and display boards and check if guessed
-
-}*/
+    
+    
 
 bool canPlaceShip(Board* b, Ship* s, int r, int c, bool orientation){
         if(orientation){
@@ -296,4 +292,21 @@ bool canPlaceShip(Board* b, Ship* s, int r, int c, bool orientation){
             }
         }
     return true;
+}
+
+void makeMove(Board* atk_board, Board* def_board){
+    string attackRow;
+    int attackC;
+    bool turnUsed = false;
+    do{
+        cout << "Enter the Row (A-J) of the attack coordinate: ";
+        cin >> attackRow;
+        cout << endl;
+        cout << "Enter the Column (1-10) of the attack coordinate: ";
+        cin >> attackC;
+        if(checkIfGuessed(atk_board, letterToNum(attackRow)-1 , attackC) == false){
+            checkForHit(atk_board, def_board, attackRow, attackC-1);
+            turnUsed = true; 
+        }
+    }while(turnUsed == false);
 }

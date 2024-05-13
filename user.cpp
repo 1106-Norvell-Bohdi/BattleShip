@@ -9,10 +9,10 @@ User::User(){
     columnGuess = 0;
     rowGuess = 'O';
     isTurn = false;
-    attackBoard;
-    defendBoard;
+    attackBoard = new Board;
+    defendBoard = new Board;
 }
-User::User(int n, int c, char r, bool t, Board a, Board d){
+User::User(int n, int c, char r, bool t, Board* a, Board* d){
     numBoats = n; 
     columnGuess = c;
     rowGuess = r;
@@ -41,10 +41,10 @@ char User::getRowGuess(){
 bool User::getIsTurn(){
     return isTurn;
 }
-Board User::getAttackBoard(){
+Board* User::getAttackBoard(){
     return attackBoard;
 }
-Board User::getDefendBoard(){
+Board* User::getDefendBoard(){
     return defendBoard;
 }
 void User::setNumBoats(int n){
@@ -59,9 +59,9 @@ void User::setRowGuess(char r){
 void User::setTurn(bool t){
     isTurn = t;
 }
-void User::setAttackBoard(Board a){
+void User::setAttackBoard(Board* a){
     attackBoard = a;
 }
-void User::setDefendBoard(Board d){
+void User::setDefendBoard(Board* d){
     defendBoard = d;
 }

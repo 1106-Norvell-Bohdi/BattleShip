@@ -6,14 +6,14 @@
 #define AI_H
 #include "player.h"
 
-class Ai: protected User{
+class Ai: public User{
     int numWins = 0;
     int numHits = 0;
 
     public:
 
     Ai();
-    Ai(int, int, int, int, char, bool, Board, Board);
+    Ai(int, int, int, int, char, bool, Board*, Board*);
     Ai(const Ai&);
 
     int getNumWins();

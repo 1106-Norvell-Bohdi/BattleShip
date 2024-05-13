@@ -8,7 +8,7 @@ Ai::Ai():User(){
     numWins = 0;
     numHits = 0;
 }
-Ai::Ai(int wins, int hits, int boats, int col, char row, bool turn, Board att, Board def):User(boats, col, row, turn, att, def){
+Ai::Ai(int wins, int hits, int boats, int col, char row, bool turn, Board* att, Board* def):User(boats, col, row, turn, att, def){
     numWins = wins;
     numHits = hits;
 }
