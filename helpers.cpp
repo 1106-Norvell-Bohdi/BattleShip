@@ -304,7 +304,7 @@ void makeMove(Board* atk_board, Board* def_board){
         cout << endl;
         cout << "Enter the Column (1-10) of the attack coordinate: ";
         cin >> attackC;
-        if(checkIfGuessed(atk_board, letterToNum(attackRow)-1 , attackC) == false){
+        if(checkIfGuessed(atk_board, letterToNum(attackRow), attackC) == false){
             checkForHit(atk_board, def_board, attackRow, attackC-1);
             turnUsed = true; 
         }

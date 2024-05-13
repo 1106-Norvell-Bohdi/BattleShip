@@ -44,7 +44,7 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    //player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
     displayBoards(player_atk, player_def);
     cout<<endl;
     
@@ -55,7 +55,6 @@ int main(){
         player->setTurn(true);
     }
     else AI->setTurn(true);
-
     do{
         if(player->getIsTurn() == true){
             makeMove(player_atk, AI_def);
