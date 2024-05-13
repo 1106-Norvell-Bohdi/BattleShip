@@ -131,6 +131,7 @@ Board* placeShips(Board* b, Ship* s){
         rowN = letterToNum(row);
         cout<<"Column (Number): ";
         cin>>col;
+
     
     if(letterToNum(choice) == 7){
         s->setFirstSpace(&b->getBoardArray()[col-1][rowN]);
@@ -154,30 +155,48 @@ Board* placeShips(Board* b, Ship* s){
     return b;
 }
 
-Board* placeShipsAi(Board* b, Ship* ship){
+Board* placeShipsAi(Board* b, Ship* ship1, Ship* ship2, Ship* ship3, Ship* ship4, Ship* ship5){
+    bool isHorizontal;
+    int maxStartCol, maxStartRow, row, col;
+    Ship** boats = new Ship*[5];
+    boats[0] = ship1;
+    boats[1] = ship2;
+    boats[2] = ship3;
+    boats[3] = ship4;
+    boats[4] = ship5;
+
     srand(time(NULL));
-    bool isHorizontal = rand() % 2 == 0;
+
+     for(int j = 0; j < 5; j++){
+        isHorizontal = rand() % 2 == 0;
     if(isHorizontal){
-        int maxStartCol = MAXSIZE - ship->getLength();
-        int row = rand() % MAXSIZE;
-        int col = rand() % (maxStartCol+1);
-        ship->setFirstSpace(&b->getBoardArray()[col-1][row]);
-        ship->setLastSpace(&b->getBoardArray()[col+ship->getLength() -1][row]);
-        for(int i = 0; i < ship->getLength(); i++){
-            b->getBoardArray()[col-1][row].setShape(ship->getShape());
+        maxStartCol = MAXSIZE - boats[j]->getLength();
+        row = rand() % MAXSIZE;
+        col = rand() % (maxStartCol+1);
+        if(canPlaceShip(b, boats[j], row, col, isHorizontal)){
+        boats[j]->setFirstSpace(&b->getBoardArray()[col-1][row]);
+        boats[j]->setLastSpace(&b->getBoardArray()[col+boats[j]->getLength() -1][row]);
+        for(int i = 0; i < boats[j]->getLength(); i++){
+            b->getBoardArray()[col-1][row].setShape(boats[j]->getShape());
+            b->getBoardArray()[col-1][row].setOccupied(true);
             col++;
+        }
         }
     }
     else{
-        int maxStartRow = MAXSIZE - ship->getLength();
-        int row = rand() % (maxStartRow+1);
-        int col = rand() % MAXSIZE;
-        ship->setFirstSpace(&b->getBoardArray()[col-1][row]);
-        ship->setLastSpace(&b->getBoardArray()[col-1][row+ship->getLength()-1]);
-        for(int i = 0; i < ship->getLength(); i++){
-            b->getBoardArray()[col-1][row].setShape(ship->getShape());
+        maxStartRow = MAXSIZE - boats[j]->getLength();
+        row = rand() % (maxStartRow+1);
+        col = rand() % MAXSIZE;
+        if(canPlaceShip(b, boats[j], row, col, isHorizontal)){
+        boats[j]->setFirstSpace(&b->getBoardArray()[col-1][row]);
+        boats[j]->setLastSpace(&b->getBoardArray()[col-1][row+boats[j]->getLength()-1]);
+        for(int i = 0; i < boats[j]->getLength(); i++){
+            b->getBoardArray()[col-1][row].setShape(boats[j]->getShape());
+            b->getBoardArray()[col-1][row].setOccupied(true);
             row++;
         }
+        }
+    }
     }
     return b;
     //get random selection for H/V
@@ -250,3 +269,27 @@ void takeTurn(T p){
     //call check for Hit and display boards and check if guessed
 
 }*/
+
+bool canPlaceShip(Board* b, Ship* s, int r, int c, bool o){
+        if(o == true){
+            if(c + s->getLength() > MAXSIZE){
+                return false;
+            }
+            for(int j = c; j < c+s->getLength(); j++){
+                if(b->getBoardArray()[r][j].getOccupied()){
+                    return false;
+                }
+            }
+        }
+        else{
+            if(r+s->getLength() > MAXSIZE){
+                return false;
+            }
+            for(int k = r; k < r+s->getLength(); k++){
+                if(b->getBoardArray()[k][c].getOccupied()){
+                    return false;
+                }
+            }
+        }
+    return true;
+}
