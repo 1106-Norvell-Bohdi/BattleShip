@@ -4,7 +4,7 @@
 
 #ifndef PLAYERS_H
 #define PLAYERS_H
-#include "helpers.h"
+#include "user.h"
 
 class Player: protected User{
     int numWins = 0;

@@ -43,7 +43,8 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    // player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    displayBoards(player_atk, player_def);
     AI_def = placeShipsAi(AI_def, carrierAi, battleshipAi, destroyerAi, submarineAi, patrol_boatAi);
     displayBoards(AI_atk, AI_def);
 
@@ -57,12 +58,13 @@ int main(){
 
 
 
+
     
-    if(randomTurn() == 0){
-        player->setTurn(true);
-    }
-    else{
-        AI->setTurn(true);
-    }
+    // if(randomTurn() == 0){
+    //     player->setTurn(true);
+    // }
+    // else{
+    //     AI->setTurn(true);
+    // }
 
 }

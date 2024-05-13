@@ -4,7 +4,7 @@
 
 #ifndef HELPERS_H
 #define HELPERS_H
-#include "user.h"
+#include "ai.h"
 
 string nextLetter(string);
 int letterToNumber(string);

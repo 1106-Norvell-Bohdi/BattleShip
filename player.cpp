@@ -33,14 +33,19 @@ void Player::setNumHits(int h){
     numHits = h;
 }
 
-void Player::makeMove(Board* atk){
+void Player::makeMove(Board* atk_board, Board* def_board){
     string attackRow;
-    int attackCol;
+    int attackR;
+    int attackC;
     cout << "Enter the Row (A-J) of the attack coordinate: ";
     cin >> attackRow;
+    attackR = letterToNum(attackRow);
     cout << endl;
-    cout << "Enter the Column (A-J) of the attack coordinate: ";
+    cout << "Enter the Column (1-10) of the attack coordinate: ";
     cin >> attackCol;
-
-
+    if(!checkIfGuessed(atk_board, attackR-1)){
+        if(checkForHit(atk_board, def_board, attackR-1, attackC-1)){
+            numHits++;
+        }
+    }
 }
