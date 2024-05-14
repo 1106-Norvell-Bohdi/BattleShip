@@ -55,6 +55,7 @@ int main(){
         player->setTurn(true);
     }
     else AI->setTurn(true);
+    
     do{
         if(player->getIsTurn() == true){
             makeMove(player_atk, AI_def);
