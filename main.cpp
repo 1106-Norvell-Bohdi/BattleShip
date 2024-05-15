@@ -86,5 +86,8 @@ int main(){
             displayBoards(AI_atk, AI_def);
         }
     }while(checkForWin(AI->getNumHits()) == false || checkForWin(AI->getNumHits() == false));
+    
+    delete [] shipsP;
+    delete [] shipsAi;
 
 }
