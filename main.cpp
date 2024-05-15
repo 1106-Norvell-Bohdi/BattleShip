@@ -79,6 +79,8 @@ int main(){
             cout << "PLAYER BOARDS" << endl << endl << endl;
             displayBoards(player_atk, player_def);
             checkForWin(player->getNumHits());
+            // cout << "ROW: " << letterToNumber(carrier->getFirstSpace()->getRow()) << endl;
+            // cout << "COL: " << carrier->getFirstSpace()->getColumn() << endl;
         }
         else{
             makeMoveAi(AI_atk, player_def, AI, shipsAi);
@@ -87,6 +89,10 @@ int main(){
             cout << "AI BOARDS" << endl << endl << endl;
             displayBoards(AI_atk, AI_def);
             checkForWin(AI->getNumHits());
+            // cout << "ROW: " << letterToNumber(carrierAi->getFirstSpace()->getRow()) << endl;
+            // cout << "COL: " << carrierAi->getFirstSpace()->getColumn() << endl;
+
+
         }
     }while(AI->getNumHits() < 17 && player->getNumHits() < 17);
     
