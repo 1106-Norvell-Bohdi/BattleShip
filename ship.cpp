@@ -4,14 +4,6 @@
 
 #include "ship.h"
 
-char shape;
-string name;
-int length;
-bool isSunk;
-    
-Cell firstSpace, lastSpace;
-
-
 Ship::Ship(){
     shape = 'S';
     name = "Ship";
@@ -19,14 +11,16 @@ Ship::Ship(){
     isSunk = false;
     firstSpace = new Cell;
     lastSpace = new Cell;
+    orientation = false;
 }
-Ship::Ship(string n, string s, int l, bool is, Cell* fs, Cell* ls){
+Ship::Ship(string n, string s, int l, bool is, Cell* fs, Cell* ls, bool o){
     shape = s;
     name = n;
     length = l;
     isSunk = is;
     firstSpace = fs;
     lastSpace = ls;
+    orientation = o;
 }
 
 Ship::Ship(const Ship& rhs){
@@ -36,6 +30,7 @@ Ship::Ship(const Ship& rhs){
     isSunk = rhs.isSunk;
     firstSpace = rhs.firstSpace;
     lastSpace = rhs.lastSpace;
+    orientation = rhs.orientation;
 }
 
 string Ship::getShape(){
@@ -49,6 +44,9 @@ int Ship::getLength(){
 }
 bool Ship::getIsSunk(){
     return isSunk;
+}
+bool Ship::getOrientation(){
+    return orientation;
 }
 Cell* Ship::getFirstSpace(){
     return firstSpace;
@@ -68,6 +66,9 @@ void Ship::setLength(int l){
 }
 void Ship::setIsSunk(bool is){
     isSunk = is;
+}
+void Ship::setOrientation(bool o){
+    orientation = o;
 }
 void Ship::setFirstSpace(Cell* fs){
     firstSpace = fs;

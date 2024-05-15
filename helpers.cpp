@@ -72,6 +72,7 @@ int letterToNum(string letter){
     return 99;
 }
 
+
 Board* setAllCells(Board* b){
     string row = "A";
     int column = 1;
@@ -125,6 +126,12 @@ Board* placeShips(Board* b, Ship* s){
         cout << "The "<<s->getName()<<" is "<<s->getLength()<<" spaces long..." << endl;
         cout<<"Would you like to place this ship vertically or horizontally (H/V)? ";
         cin>>choice;
+        if(letterToNum(choice) == 7){
+            s->setOrientation(true); 
+        }
+        if(letterToNum(choice) == 10){
+            s->setOrientation(false);    
+        }
         cout<<"Please enter row and column: "<<endl;
         cout<<"Row (Letter): ";
         cin>>row;
@@ -132,8 +139,9 @@ Board* placeShips(Board* b, Ship* s){
         cout<<"Column (Number): ";
         cin>>col;
 
-    
-    if(letterToNum(choice) == 7){
+    if(canPlaceShip(b, s, rowN, col, s->getOrientation())){
+    if(s->getOrientation()){
+        s->setOrientation(true);
         s->setFirstSpace(&b->getBoardArray()[rowN][col-1]);
         s->setLastSpace(&b->getBoardArray()[rowN-1][col+s->getLength()-1]);
         for(int i = 0; i < s->getLength(); i++){
@@ -142,7 +150,8 @@ Board* placeShips(Board* b, Ship* s){
             col++;
         }
     }
-    if(letterToNum(choice) == 10){
+    else{
+        s->setOrientation(false);
         s->setFirstSpace(&b->getBoardArray()[rowN][col-1]);
         s->setLastSpace(&b->getBoardArray()[rowN+s->getLength()-1][col-1]);
         for(int i = 0; i < s->getLength(); i++){
@@ -150,6 +159,7 @@ Board* placeShips(Board* b, Ship* s){
             b->getBoardArray()[rowN][col-1].setOccupied(true);
             rowN++;
         }
+    }
     }
     
     return b;
@@ -228,24 +238,23 @@ Board* placeAllShips(Board* A, Board* D, Ship* c, Ship* b, Ship* d, Ship* s, Shi
     return D;
 }
 
-bool checkForHit(Board* a, Board* d, string r, int c){
-    int row = letterToNum(r);
-    if(d->getBoardArray()[row][c].getOccupied() == true){
-        a->getBoardArray()[row][c].setShape("!");
-        a->getBoardArray()[row][c].setHit(true);
+bool checkForHit(Board* a, Board* d, int r, int c){
+    if(d->getBoardArray()[r][c].getOccupied() == true){
+        a->getBoardArray()[r][c].setShape("!");
+        a->getBoardArray()[r][c].setHit(true);
         
-        d->getBoardArray()[row][c].setShape("!");
-        d->getBoardArray()[row][c].setHit(true);
+        //d->getBoardArray()[r][c].setShape("!");
+        d->getBoardArray()[r][c].setHit(true);
         
         cout<<"Hit! At position "<<r<<c+1<<endl;
         return true;
     }
     else{
-        a->getBoardArray()[row][c].setShape("M");
-        a->getBoardArray()[row][c].setHit(false);
+        a->getBoardArray()[r][c].setShape("M");
+        a->getBoardArray()[r][c].setHit(false);
         
-        d->getBoardArray()[row][c].setShape("M");
-        d->getBoardArray()[row][c].setHit(false);
+        //d->getBoardArray()[r][c].setShape("M");
+        d->getBoardArray()[r][c].setHit(false);
         
         cout<<"Miss. At position "<<r<<c+1<<endl;
         return false;
@@ -295,18 +304,76 @@ bool canPlaceShip(Board* b, Ship* s, int r, int c, bool orientation){
 }
 
 void makeMove(Board* atk_board, Board* def_board){
-    string attackRow;
+    string r;
+    int attackR;
     int attackC;
     bool turnUsed = false;
     do{
         cout << "Enter the Row (A-J) of the attack coordinate: ";
-        cin >> attackRow;
+        cin >> r;
         cout << endl;
         cout << "Enter the Column (1-10) of the attack coordinate: ";
         cin >> attackC;
-        if(checkIfGuessed(atk_board, letterToNum(attackRow), attackC) == false){
-            checkForHit(atk_board, def_board, attackRow, attackC-1);
+        attackR = letterToNum(r);
+        if(checkIfGuessed(atk_board, attackR, attackC-1) == false){
+            checkForHit(atk_board, def_board, attackR, attackC-1);
             turnUsed = true; 
         }
     }while(turnUsed == false);
+}
+
+void makeMoveAi(Board* atk_board, Board* def_board){
+    int attackR;
+    int attackC;
+    bool turnUsed = false;
+    srand(time(NULL));
+    do{
+        attackR = rand() % MAXSIZE;
+        attackC = rand() % MAXSIZE;
+        if(checkIfGuessed(atk_board, attackR, attackC-1) == false){
+            checkForHit(atk_board, def_board, attackR, attackC);
+            turnUsed = true; 
+        }
+    }while(turnUsed == false);
+}
+
+void checkIfSunk(Board* atk_board, Board* def_board, Ship* ship){
+    //go through all ships cells and check if all are hit
+    //if hit all of them change change ship isSunk to false;
+    int numHits = 0;
+    string r = ship->getFirstSpace()->getRow();
+    int row = letterToNum(r);
+    int col = ship->getFirstSpace()->getColumn();
+        if(ship->getOrientation()){ //horizontal
+            for(int j = 0; j < ship->getLength(); j++){
+                if(atk_board->getBoardArray()[row][col+j].getHit()){
+                    if(def_board->getBoardArray()[row][col+j].getOccupied()){
+                        numHits++;
+                        if(numHits ==  ship->getLength()){
+                            for(int k =0; k < ship->getLength(); k++){
+                                ship->setIsSunk(true);
+                                atk_board->getBoardArray()[row][col+j].setShape("S");
+                            }
+                    }
+                 }
+                }
+            }
+        }
+        else{
+            for(int j = 0; j < ship->getLength(); j++){
+                if(atk_board->getBoardArray()[row+j][col].getHit()){
+                    if(def_board->getBoardArray()[row+j][col].getOccupied()){
+                        numHits++;
+                        if(numHits ==  ship->getLength()){
+                            for(int k =0; k < ship->getLength(); k++){
+                                ship->setIsSunk(true);
+                                atk_board->getBoardArray()[row+j][col].setShape("S");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+}
+void checkIfSunkAll(Board* atk_board, Board def_board, Ship* ship1, Ship* ship2, Ship* ship3, Ship* ship4, Ship* ship5){
 }

@@ -9,20 +9,21 @@
 class Ship{
     string name, shape;
     int length;
-    bool isSunk;
+    bool isSunk, orientation;
     Cell* firstSpace; 
     Cell* lastSpace;
 
     public:
 
     Ship();
-    Ship(string, string, int, bool, Cell*, Cell*);
+    Ship(string, string, int, bool, Cell*, Cell*, bool);
     Ship(const Ship&);
 
     string getShape();
     string getName();
     int getLength();
     bool getIsSunk();
+    bool getOrientation();
     Cell* getFirstSpace();
     Cell* getLastSpace();
 
@@ -30,6 +31,7 @@ class Ship{
     void setName(string);
     void setLength(int);
     void setIsSunk(bool);
+    void setOrientation(bool);
     void setFirstSpace(Cell*);
     void setLastSpace(Cell*);
 };
