@@ -33,6 +33,20 @@ int main(){
     Ship* destroyerAi = new Ship("Destroyer", "D", 3, false, firstSpace, lastSpace, false);
     Ship* submarineAi = new Ship("Submarine", "S", 3, false, firstSpace, lastSpace, false);
     Ship* patrol_boatAi = new Ship("Patrol Boat", "P", 2, false, firstSpace, lastSpace, false);
+
+    Ship** shipsP = new Ship*[5];
+    shipsP[0] = carrier;
+    shipsP[1] = battleship;
+    shipsP[2] = destroyer;
+    shipsP[3] = submarine;
+    shipsP[4] = patrol_boat;
+
+    Ship** shipsAi = new Ship*[5];
+    shipsAi[0] = carrierAi;
+    shipsAi[1] = battleshipAi;
+    shipsAi[2] = destroyerAi;
+    shipsAi[3] = submarineAi;
+    shipsAi[4] = patrol_boatAi;
     
     system("clear");
     
@@ -44,7 +58,7 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    //player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
     displayBoards(player_atk, player_def);
     cout<<endl;
     
@@ -65,7 +79,7 @@ int main(){
             displayBoards(player_atk, player_def);
         }
         else{
-            makeMoveAi(AI_atk, player_def);
+            makeMoveAi(AI_atk, player_def, shipsAi);
             AI->setTurn(false);
             player->setTurn(true);
             cout << "AI AI AI AI AI AI" << endl;

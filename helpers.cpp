@@ -322,7 +322,7 @@ void makeMove(Board* atk_board, Board* def_board){
     }while(turnUsed == false);
 }
 
-void makeMoveAi(Board* atk_board, Board* def_board){
+void makeMoveAi(Board* atk_board, Board* def_board, Ship** ships){
     int attackR;
     int attackC;
     bool turnUsed = false;
@@ -332,48 +332,42 @@ void makeMoveAi(Board* atk_board, Board* def_board){
         attackC = rand() % MAXSIZE;
         if(checkIfGuessed(atk_board, attackR, attackC-1) == false){
             checkForHit(atk_board, def_board, attackR, attackC);
+            for(int i = 0; i < 5; i++){
+                checkIfSunk(atk_board, def_board, ships[i]);
+            }
             turnUsed = true; 
         }
     }while(turnUsed == false);
 }
 
 void checkIfSunk(Board* atk_board, Board* def_board, Ship* ship){
-    //go through all ships cells and check if all are hit
-    //if hit all of them change change ship isSunk to false;
     int numHits = 0;
-    string r = ship->getFirstSpace()->getRow();
-    int row = letterToNum(r);
+    int row = letterToNum(ship->getFirstSpace()->getRow());
     int col = ship->getFirstSpace()->getColumn();
         if(ship->getOrientation()){ //horizontal
             for(int j = 0; j < ship->getLength(); j++){
-                if(atk_board->getBoardArray()[row][col+j].getHit()){
-                    if(def_board->getBoardArray()[row][col+j].getOccupied()){
-                        numHits++;
-                        if(numHits ==  ship->getLength()){
-                            for(int k =0; k < ship->getLength(); k++){
-                                ship->setIsSunk(true);
-                                atk_board->getBoardArray()[row][col+j].setShape("S");
-                            }
-                    }
-                 }
+                if(atk_board->getBoardArray()[row][col+j].getHit() && def_board->getBoardArray()[row][col+j].getOccupied()){
+                    numHits++;
                 }
             }
         }
         else{
             for(int j = 0; j < ship->getLength(); j++){
-                if(atk_board->getBoardArray()[row+j][col].getHit()){
-                    if(def_board->getBoardArray()[row+j][col].getOccupied()){
-                        numHits++;
-                        if(numHits ==  ship->getLength()){
-                            for(int k =0; k < ship->getLength(); k++){
-                                ship->setIsSunk(true);
-                                atk_board->getBoardArray()[row+j][col].setShape("S");
-                            }
-                        }
-                    }
+                if(atk_board->getBoardArray()[row+j][col].getHit() && def_board->getBoardArray()[row+j][col].getOccupied()){
+                    numHits++;
                 }
             }
+        if(numHits == ship->getLength()){
+            for(int k = 0; k < ship->getLength(); k++){
+                if(ship->getOrientation()){
+                    atk_board->getBoardArray()[row][col+k].setShape("X");
+                } 
+                 else{
+                    atk_board->getBoardArray()[row+k][col].setShape("X");
+                }
+            }
+            ship->setIsSunk(true);
+            cout << " The " << ship->getName() << "has been sunk!" << endl;
         }
-}
-void checkIfSunkAll(Board* atk_board, Board def_board, Ship* ship1, Ship* ship2, Ship* ship3, Ship* ship4, Ship* ship5){
+    }
 }

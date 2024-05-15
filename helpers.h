@@ -20,7 +20,7 @@ bool checkForWin(int);
 void checkIfSunk(Board*, Board*, Ship*);
 void checkIfSunkAll(Ship*, Ship*, Ship*, Ship*, Ship*);
 void makeMove(Board*, Board*);
-void makeMoveAi(Board*, Board*);
+void makeMoveAi(Board*, Board*, Ship**);
 bool canPlaceShip(Board*, Ship*, int, int, bool);
 
 #endif
