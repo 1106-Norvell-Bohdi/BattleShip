@@ -8,15 +8,17 @@ Ship::Ship(){
     shape = 'S';
     name = "Ship";
     length = 3; // Total Ship Sizes: 2, 3. 3,4,5
+    hits = 0;
     isSunk = false;
     firstSpace = new Cell;
     lastSpace = new Cell;
     orientation = false;
 }
-Ship::Ship(string n, string s, int l, bool is, Cell* fs, Cell* ls, bool o){
+Ship::Ship(string n, string s, int l, int h, bool is, Cell* fs, Cell* ls, bool o){
     shape = s;
     name = n;
     length = l;
+    hits = h;
     isSunk = is;
     firstSpace = fs;
     lastSpace = ls;
@@ -27,6 +29,7 @@ Ship::Ship(const Ship& rhs){
     shape = rhs.shape;
     name = rhs.name;
     length = rhs.length;
+    hits = rhs.hits;
     isSunk = rhs.isSunk;
     firstSpace = rhs.firstSpace;
     lastSpace = rhs.lastSpace;
@@ -41,6 +44,9 @@ string Ship::getName(){
 }
 int Ship::getLength(){
     return length;
+}
+int Ship::getHits(){
+    return hits;
 }
 bool Ship::getIsSunk(){
     return isSunk;
@@ -63,6 +69,9 @@ void Ship::setName(string n){
 }
 void Ship::setLength(int l){
     length = l;
+}
+void Ship::setHits(int h){
+    hits = h;
 }
 void Ship::setIsSunk(bool is){
     isSunk = is;

@@ -12,15 +12,14 @@ Board* setAllCells(Board*);
 void displayBoards(Board*, Board*);
 int randomTurn();
 Board* placeShips(Board*, Ship*);
-Board* placeShipsAi(Board*, Ship*, Ship*, Ship*, Ship* , Ship*);
+Board* placeShipsAi(Board*, Ship**);
 Board* placeAllShips(Board*, Board*, Ship*, Ship*, Ship*, Ship*, Ship*);
 void checkForHit(Board*, Board*);
 bool checkIfGuessed(Board*, int, int);
 bool checkForWin(int);
 void checkIfSunk(Board*, Board*, Ship*);
-void checkIfSunkAll(Ship*, Ship*, Ship*, Ship*, Ship*);
-void makeMove(Board*, Board*);
-void makeMoveAi(Board*, Board*, Ship**);
+void makeMove(Board*, Board*, Player*, Ship**);
+void makeMoveAi(Board*, Board*, Ai*, Ship**);
 bool canPlaceShip(Board*, Ship*, int, int, bool);
 
 #endif

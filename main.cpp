@@ -20,19 +20,19 @@ int main(){
     AI_def = setAllCells(AI_def);
     
     Player* player = new Player; 
-    Player* AI = new Player;
+    Ai* AI = new Ai;
 
-    Ship* carrier = new Ship("Carrier", "C", 5, false, firstSpace, lastSpace, false);
-    Ship* battleship = new Ship("Battleship", "B", 4, false, firstSpace, lastSpace, false);
-    Ship* destroyer = new Ship("Destroyer", "D", 3, false, firstSpace, lastSpace, false);
-    Ship* submarine = new Ship("Submarine", "S", 3, false, firstSpace, lastSpace, false);
-    Ship* patrol_boat = new Ship("Patrol Boat", "P", 2, false, firstSpace, lastSpace, false);
+    Ship* carrier = new Ship("Carrier", "C", 5, 0, false, firstSpace, lastSpace, false);
+    Ship* battleship = new Ship("Battleship", "B", 4, 0, false, firstSpace, lastSpace, false);
+    Ship* destroyer = new Ship("Destroyer", "D", 3, 0, false, firstSpace, lastSpace, false);
+    Ship* submarine = new Ship("Submarine", "S", 3, 0, false, firstSpace, lastSpace, false);
+    Ship* patrol_boat = new Ship("Patrol Boat", "P", 2, 0, false, firstSpace, lastSpace, false);
 
-    Ship* carrierAi = new Ship("Carrier", "C", 5, false, firstSpace, lastSpace, false);
-    Ship* battleshipAi = new Ship("Battleship", "B", 4, false, firstSpace, lastSpace, false);
-    Ship* destroyerAi = new Ship("Destroyer", "D", 3, false, firstSpace, lastSpace, false);
-    Ship* submarineAi = new Ship("Submarine", "S", 3, false, firstSpace, lastSpace, false);
-    Ship* patrol_boatAi = new Ship("Patrol Boat", "P", 2, false, firstSpace, lastSpace, false);
+    Ship* carrierAi = new Ship("Carrier", "C", 5, 0, false, firstSpace, lastSpace, false);
+    Ship* battleshipAi = new Ship("Battleship", "B", 4, 0, false, firstSpace, lastSpace, false);
+    Ship* destroyerAi = new Ship("Destroyer", "D", 3, 0, false, firstSpace, lastSpace, false);
+    Ship* submarineAi = new Ship("Submarine", "S", 3, 0, false, firstSpace, lastSpace, false);
+    Ship* patrol_boatAi = new Ship("Patrol Boat", "P", 2, 0, false, firstSpace, lastSpace, false);
 
     Ship** shipsP = new Ship*[5];
     shipsP[0] = carrier;
@@ -59,10 +59,11 @@ int main(){
         return 0;
     }
     //player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    player_def = placeShipsAi(player_def, shipsP);
     displayBoards(player_atk, player_def);
     cout<<endl;
     
-    AI_def = placeShipsAi(AI_def, carrierAi, battleshipAi, destroyerAi, submarineAi, patrol_boatAi);
+    AI_def = placeShipsAi(AI_def, shipsAi);
     displayBoards(AI_atk, AI_def);
 
     if(randomTurn() == 0){
@@ -72,20 +73,22 @@ int main(){
     
     do{
         if(player->getIsTurn() == true){
-            makeMove(player_atk, AI_def);
+            makeMove(player_atk, AI_def, player, shipsP);
             player->setTurn(false);
             AI->setTurn(true);
-            cout << "P P P P P P P P P P" << endl;
+            cout << "PLAYER BOARDS" << endl << endl << endl;
             displayBoards(player_atk, player_def);
+            checkForWin(player->getNumHits());
         }
         else{
-            makeMoveAi(AI_atk, player_def, shipsAi);
+            makeMoveAi(AI_atk, player_def, AI, shipsAi);
             AI->setTurn(false);
             player->setTurn(true);
-            cout << "AI AI AI AI AI AI" << endl;
+            cout << "AI BOARDS" << endl << endl << endl;
             displayBoards(AI_atk, AI_def);
+            checkForWin(AI->getNumHits());
         }
-    }while(checkForWin(AI->getNumHits()) == false || checkForWin(AI->getNumHits() == false));
+    }while(AI->getNumHits() < 17 && player->getNumHits() < 17);
     
     delete [] shipsP;
     delete [] shipsAi;
