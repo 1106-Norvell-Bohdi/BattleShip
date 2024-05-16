@@ -50,7 +50,6 @@ int main(){
     
     system("clear");
     
-    cout << carrier;
     cout<<"Welcome to Battle Ship"<<endl;
     cout<<"======================"<<endl;
     cout<<"Would you like to play? (Y/N): ";
@@ -59,8 +58,7 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    player_def = placeShipsAi(player_def, shipsP);
-    //player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
+    player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
     displayBoards(player_atk, player_def);
     cout<<endl;
     
