@@ -35,6 +35,51 @@ string nextLetter(string letter){
     return letter = "error";
 }
 
+string numToLetter(int n){
+    string letter = "";
+    if( n == 1){
+        letter = "A";
+        return letter;
+    }
+    if(n == 2){
+        letter = "B";
+        return letter;
+    }
+    if(n == 3){
+        letter = "C";
+        return letter;
+    }
+    if(n == 4){
+        letter = "D";
+        return letter;
+    }
+    if(n == 5){
+        letter = "E";
+        return letter;
+    }
+    if(n == 6){
+        letter = "F";
+        return letter;
+    }
+    if(n == 7){
+        letter = "G";
+        return letter;
+    }
+    if(n == 8){
+        letter = "H";
+        return letter;
+    }
+    if(n == 9){
+        letter = "I";
+        return letter;
+    }
+    if(n == 10){
+        letter = "J";
+        return letter;
+    }
+    return "ERROR";
+}
+
 int letterToNumber(string letter){
     if(letter == "A" || letter == "a"){
         return 0;
@@ -73,6 +118,7 @@ int letterToNumber(string letter){
 }
 
 
+
 Board* setAllCells(Board* b){
     string row = "A";
     int column = 1;
@@ -98,6 +144,31 @@ ostream& operator<<(ostream& out, Board* b){
         }
         cout<<endl;
     }
+    return out;
+}
+ostream& operator<<(ostream& out, Ship* ship){
+    out << ship->getShape() << endl;
+    return out;
+}
+
+ostream& operator<<(ostream& out, Cell* cell){
+    out << cell->getShape() << endl;
+    return out;
+}
+
+ostream& operator<<(ostream& out, User* user){
+    out << user->getColumnGuess() << endl;
+    out << user->getRowGuess() << endl;
+    return out;
+}
+
+ostream& operator<<(ostream& out, Ai* ai){
+    out << ai->getNumWins() << endl;
+    return out;
+}
+
+ostream& operator<<(ostream& out, Player* player){
+    out << player->getNumWins() << endl;
     return out;
 }
 
@@ -141,9 +212,17 @@ Board* placeShips(Board* b, Ship* s){
 
     if(canPlaceShip(b, s, rowN, col, s->getOrientation())){
     if(s->getOrientation()){
-        s->setOrientation(true);
-        s->setFirstSpace(&b->getBoardArray()[rowN][col-1]);
-        s->setLastSpace(&b->getBoardArray()[rowN-1][col+s->getLength()-1]);
+        Cell* firstS = new Cell;
+        Cell* lastS = new Cell;
+        firstS->setRow(row);
+        firstS->setColumn(col);
+        lastS->setRow(row);
+        lastS->setColumn(col+s->getLength()-1);
+        s->setFirstSpace(firstS);
+        s->setLastSpace(lastS);
+        cout << "TEST" << endl;
+        cout << s->getFirstSpace()->getRow() <<endl;
+        cout << s->getFirstSpace()->getColumn() <<endl;
         for(int i = 0; i < s->getLength(); i++){
             b->getBoardArray()[rowN][col-1].setShape(s->getShape());
             b->getBoardArray()[rowN][col-1].setOccupied(true);
@@ -152,8 +231,14 @@ Board* placeShips(Board* b, Ship* s){
     }
     else{
         s->setOrientation(false);
-        s->setFirstSpace(&b->getBoardArray()[rowN][col-1]);
-        s->setLastSpace(&b->getBoardArray()[rowN+s->getLength()-1][col-1]);
+        Cell* firstS = new Cell;
+        Cell* lastS = new Cell;
+        firstS->setRow(row);
+        firstS->setColumn(col-1);
+        lastS->setRow(numToLetter(rowN+s->getLength()-1));
+        lastS->setColumn(col-1);
+        s->setFirstSpace(firstS);
+        s->setLastSpace(lastS);
         for(int i = 0; i < s->getLength(); i++){
             b->getBoardArray()[rowN][col-1].setShape(s->getShape());
             b->getBoardArray()[rowN][col-1].setOccupied(true);
@@ -174,26 +259,40 @@ Board* placeShipsAi(Board* b, Ship** ship){
      for(int j = 0; j < 5; j++){
             isHorizontal = rand() % 2 == 0;
             if(isHorizontal){
+                ship[j]->setOrientation(true);
                 do{
                     maxStartCol = MAXSIZE - ship[j]->getLength();
                     row = rand() % MAXSIZE;
                     col = rand() % maxStartCol;
                 }while(!canPlaceShip(b, ship[j], row, col, isHorizontal));
-                ship[j]->setFirstSpace(&b->getBoardArray()[row][col]);
-                ship[j]->setLastSpace(&b->getBoardArray()[row][col+ship[j]->getLength()-1]);
+                Cell* firstS = new Cell;
+                Cell* lastS = new Cell;
+                firstS->setRow(numToLetter(row));
+                firstS->setColumn(col);
+                lastS->setRow(numToLetter(row));
+                lastS->setColumn(col+ship[j]->getLength()-1);
+                ship[j]->setFirstSpace(firstS);
+                ship[j]->setLastSpace(lastS);
                 for(int i = 0; i < ship[j]->getLength(); i++){
                     b->getBoardArray()[row][col+i].setShape(ship[j]->getShape());
                     b->getBoardArray()[row][col+i].setOccupied(true);
                 }
             }
             else{
+                ship[j]->setOrientation(false);
                 do{
                     maxStartRow = MAXSIZE - ship[j]->getLength();
                     row = rand() % maxStartRow;
                     col = rand() % MAXSIZE;
                 }while(!canPlaceShip(b, ship[j], row, col, isHorizontal));
-                ship[j]->setFirstSpace(&b->getBoardArray()[row][col]);
-                ship[j]->setLastSpace(&b->getBoardArray()[row+ship[j]->getLength()-1][col]);
+                Cell* firstS = new Cell;
+                Cell* lastS = new Cell;
+                firstS->setRow(numToLetter(row));
+                firstS->setColumn(col-1);
+                lastS->setRow(numToLetter(row+ship[j]->getLength()-1));
+                lastS->setColumn(col-1);
+                ship[j]->setFirstSpace(firstS);
+                ship[j]->setLastSpace(lastS);
                 for(int i = 0; i < ship[j]->getLength(); i++){
                     b->getBoardArray()[row+i][col].setShape(ship[j]->getShape());
                     b->getBoardArray()[row+i][col].setOccupied(true);
@@ -229,7 +328,7 @@ Board* placeAllShips(Board* A, Board* D, Ship* c, Ship* b, Ship* d, Ship* s, Shi
     return D;
 }
 
-bool checkForHit(Board* a, Board* d, int r, int c, Ship* ship){
+bool checkForHit(Board* a, Board* d, int r, int c, Ship* ship, Player* player){
     if(d->getBoardArray()[r][c].getOccupied() == true){
         a->getBoardArray()[r][c].setShape("!");
         a->getBoardArray()[r][c].setHit(true);
@@ -238,9 +337,10 @@ bool checkForHit(Board* a, Board* d, int r, int c, Ship* ship){
         d->getBoardArray()[r][c].setHit(true);
         if(d->getBoardArray()[r][c].getShape() == ship->getShape()){
             ship->setHits(ship->getHits()+1);
+            player->setNumHits(player->getNumHits()+1);
         }
         
-        //cout<<"Hit! At position "<<r<<c+1<<endl;
+        cout<<"You Hit a Ship!!" << endl;
         return true;
     }
     else{
@@ -250,7 +350,32 @@ bool checkForHit(Board* a, Board* d, int r, int c, Ship* ship){
         //d->getBoardArray()[r][c].setShape("M");
         d->getBoardArray()[r][c].setHit(false);
         
-        cout<<"Miss. At position "<<r<<c+1<<endl;
+        cout<<"You Missed!" << endl;
+        return false;
+    }
+}
+bool checkForHit(Board* a, Board* d, int r, int c, Ship* ship, Ai* AI){
+    if(d->getBoardArray()[r][c].getOccupied() == true){
+        a->getBoardArray()[r][c].setShape("!");
+        a->getBoardArray()[r][c].setHit(true);
+        
+        //d->getBoardArray()[r][c].setShape("!");
+        d->getBoardArray()[r][c].setHit(true);
+        if(d->getBoardArray()[r][c].getShape() == ship->getShape()){
+            ship->setHits(ship->getHits()+1);
+            AI->setNumHits(AI->getNumHits()+1);
+        }
+        cout<<"AI Hit a Ship!!" << endl;
+        return true;
+    }
+    else{
+        a->getBoardArray()[r][c].setShape("M");
+        a->getBoardArray()[r][c].setHit(false);
+        
+        d->getBoardArray()[r][c].setShape("M");
+        d->getBoardArray()[r][c].setHit(false);
+        
+        cout<<"AI Missed!" << endl;
         return false;
     }
 }
@@ -263,14 +388,21 @@ bool checkIfGuessed(Board* b, int r, int c){
     return false;
 }
 
-bool checkForWin(int n){
+bool checkForWinPlayer(int n){
     if(n == 17){
-        cout<<"Congratulations! You sunk all of your opponents Battleships!"<<endl;
+        cout<<"Congratulations! You sunk all of your opponents Battleships! YOU WIN:)"<<endl;
         return true;
     }
     return false;
 }
-    
+
+bool checkForWinAi(int n){
+    if(n == 17){
+        cout<<"Unfortunately AI sunk all of your  Battleships! YOU LOSE :("<<endl;
+        return true;
+    }
+    return false;
+}
     
 
 bool canPlaceShip(Board* b, Ship* s, int r, int c, bool orientation){
@@ -311,22 +443,26 @@ void makeMove(Board* atk_board, Board* def_board, Player* player, Ship** ship){
         attackR = letterToNumber(r);
         if(checkIfGuessed(atk_board, attackR, attackC-1) == false){
             for(int i=0; i < 5; i++){
-            if(checkForHit(atk_board, def_board, attackR, attackC-1, ship[i])){
-                //player->setNumHits(player->getNumHits()+1);
+            if(checkForHit(atk_board, def_board, attackR, attackC-1, ship[i], player)){
+                // player->setNumHits(player->getNumHits()+1);
                 //CHECKS TO SEE IF A SHIP IS SUNK< IF SO CHANGES SHAPE ON THE CORRESPONDING ATTACK BOARD
-                // if(ship[i]->getHits() == ship[i]->getLength()){
-                //         for(int j = 0; j < ship[i]->getLength(); j++){
-                //             row = letterToNumber(ship[i]->getFirstSpace()->getRow());
-                //             col = ship[i]->getFirstSpace()->getColumn();
-                //             if(ship[i]->getOrientation()){
-                //                 atk_board->getBoardArray()[row][col+j].setShape("X");
-                //             } 
-                //             else{
-                //                 atk_board->getBoardArray()[row+j][col].setShape("X");
-                //             }
-                //         }
-                //         cout << "The " << ship[i]->getName() << " has been sunk!!" << endl;
-                //     }
+                if(!ship[i]->getIsSunk()){
+                if(ship[i]->getHits() == ship[i]->getLength()){
+                        // for(int j = 0; j < ship[i]->getLength(); j++){
+                        //     row = letterToNumber(ship[i]->getFirstSpace()->getRow());
+                        //     col = ship[i]->getFirstSpace()->getColumn()-1;
+                        //     cout << row << col+j << endl;
+                        //     if(ship[i]->getOrientation()){
+                        //         atk_board->getBoardArray()[row][col+j].setShape("X");
+                        //     } 
+                        //     else{
+                        //         atk_board->getBoardArray()[row+j][col].setShape("X");
+                        //     }
+                        // }
+                        cout << "The " << ship[i]->getName() << " has been sunk!!" << endl;
+                        ship[i]->setIsSunk(true);
+                    }
+                }
             }
             }
             turnUsed = true; 
@@ -344,22 +480,27 @@ void makeMoveAi(Board* atk_board, Board* def_board, Ai* ai, Ship** ship){
         attackC = rand() % MAXSIZE;
         if(checkIfGuessed(atk_board, attackR, attackC-1) == false){
             for(int i=0; i < 5; i++){
-            if(checkForHit(atk_board, def_board, attackR, attackC, ship[i])){
-                //ai->setNumHits(ai->getNumHits()+1);
+            if(checkForHit(atk_board, def_board, attackR, attackC, ship[i], ai)){
+                // ai->setNumHits(ai->getNumHits()+1);
                     //CHECKS TO SEE IF A SHIP IS SUNK< IF SO CHANGES SHAPE ON THE CORRESPONDING ATTACK BOARD
-                    // if(ship[i]->getHits() == ship[i]->getLength()){
-                    //     for(int j = 0; j < ship[i]->getLength(); j++){
-                    //         int row = letterToNumber(ship[i]->getFirstSpace()->getRow());
-                    //         int col = ship[i]->getFirstSpace()->getColumn();
-                    //         if(ship[i]->getOrientation()){
-                    //             atk_board->getBoardArray()[row][col+j].setShape("X");
-                    //         } 
-                    //         else{
-                    //             atk_board->getBoardArray()[row+j][col].setShape("X");
-                    //         }
-                    //     }
-                    //     cout << "The " << ship[i]->getName() << " has been sunk!!" << endl;
-                    // }
+                    if(!ship[i]->getIsSunk()){
+                    if(ship[i]->getHits() == ship[i]->getLength()){
+//COULDN"T GET THE BOARD TO UPDATE WHEN A SHIP IS SUNK BUT THE GAME DISPLAYS WHEN A SHIP IS SUNK
+                        // for(int j = 0; j < ship[i]->getLength(); j++){
+                        //     int row = letterToNumber(ship[i]->getFirstSpace()->getRow());
+                        //     int col = ship[i]->getFirstSpace()->getColumn();
+                        //     cout << row << col+j << endl;
+                        //     // if(ship[i]->getOrientation()){
+                        //     //     atk_board->getBoardArray()[row][col+j].setShape("X");
+                        //     // } 
+                        //     // else{
+                        //     //     atk_board->getBoardArray()[row+j][col].setShape("X");
+                        //     // }
+                        // }
+                        cout << "The " << ship[i]->getName() << " has been sunk!!" << endl;
+                        ship[i]->setIsSunk(true);
+                    }
+                    }
             }
             }
             turnUsed = true; 

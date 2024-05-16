@@ -20,5 +20,7 @@ class Player: public User{
     int getNumHits();
     void setNumWins(int);
     void setNumHits(int);
+
+    friend ostream& operator <<(ostream&, Player*);
 };
 #endif

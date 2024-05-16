@@ -50,6 +50,7 @@ int main(){
     
     system("clear");
     
+    cout << carrier;
     cout<<"Welcome to Battle Ship"<<endl;
     cout<<"======================"<<endl;
     cout<<"Would you like to play? (Y/N): ";
@@ -58,8 +59,8 @@ int main(){
     if(choice == "n" || choice == "N"){
         return 0;
     }
-    //player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
     player_def = placeShipsAi(player_def, shipsP);
+    //player_def = placeAllShips(player_atk, player_def, carrier, battleship, destroyer, submarine, patrol_boat);
     displayBoards(player_atk, player_def);
     cout<<endl;
     
@@ -76,23 +77,15 @@ int main(){
             makeMove(player_atk, AI_def, player, shipsP);
             player->setTurn(false);
             AI->setTurn(true);
-            cout << "PLAYER BOARDS" << endl << endl << endl;
             displayBoards(player_atk, player_def);
-            checkForWin(player->getNumHits());
-            // cout << "ROW: " << letterToNumber(carrier->getFirstSpace()->getRow()) << endl;
-            // cout << "COL: " << carrier->getFirstSpace()->getColumn() << endl;
+            checkForWinPlayer(player->getNumHits());
         }
         else{
             makeMoveAi(AI_atk, player_def, AI, shipsAi);
             AI->setTurn(false);
             player->setTurn(true);
-            cout << "AI BOARDS" << endl << endl << endl;
             displayBoards(AI_atk, AI_def);
-            checkForWin(AI->getNumHits());
-            // cout << "ROW: " << letterToNumber(carrierAi->getFirstSpace()->getRow()) << endl;
-            // cout << "COL: " << carrierAi->getFirstSpace()->getColumn() << endl;
-
-
+            checkForWinAi(AI->getNumHits());
         }
     }while(AI->getNumHits() < 17 && player->getNumHits() < 17);
     

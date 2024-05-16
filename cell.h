@@ -33,5 +33,7 @@ class Cell{
     void setRow(string);
     void setHit(bool);
     void setOccupied(bool);
+
+    friend ostream& operator <<(ostream&, Cell*);
 };
 #endif

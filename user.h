@@ -33,6 +33,8 @@ class User{
     void setTurn(bool);
     void setAttackBoard(Board*);
     void setDefendBoard(Board*);
+
+    friend ostream& operator <<(ostream&, User*);
     
 };
 #endif

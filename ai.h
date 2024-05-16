@@ -21,5 +21,6 @@ class Ai: public User{
     void setNumWins(int);
     void setNumHits(int);
 
+    friend ostream& operator <<(ostream&, Ai*);
 };
 #endif

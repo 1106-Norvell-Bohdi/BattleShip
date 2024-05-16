@@ -36,5 +36,7 @@ class Ship{
     void setOrientation(bool);
     void setFirstSpace(Cell*);
     void setLastSpace(Cell*);
+
+    friend ostream& operator <<(ostream&, Ship*);
 };
 #endif
